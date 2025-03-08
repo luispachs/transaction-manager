@@ -25,18 +25,16 @@ enum transactionType {
 }
 
 model roles {
-  id             BigInt         @id @default(autoincrement())
-  name           String         @db.VarChar(100)
-  permmissionsId BigInt
-  permmissions   permmissions[]
-  status         status         @default(ACTIVED)
-  user           users[]
+  id           BigInt       @id @default(autoincrement())
+  name         String       @db.VarChar(100)
+  permmissions permissions?
+  status       status       @default(ACTIVED)
+  user         users[]
 }
 
-model permmissions {
+model permissions {
   id               BigInt  @id @default(autoincrement())
-  roleId           BigInt
-  role             roles   @relation(fields: [roleId], references: [id])
+  role             roles   @relation(fields: [rolesId], references: [id])
   rolesId          BigInt  @unique
   canAccessReports Boolean @default(false)
   canModifyUsers   Boolean @default(false)
@@ -48,6 +46,7 @@ model users {
   lastname String @db.VarChar(100)
   email    String @unique @db.VarChar(100)
   password String @db.VarChar(255)
+  phone    String @db.VarChar(16)
   role     roles  @relation(fields: [roleId], references: [id])
   roleId   BigInt
 }
