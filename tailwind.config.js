@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  important:true,
   content: [
       "./app/**/*.tsx",
       "./components/**/*.tsx",
@@ -15,6 +16,9 @@ export default {
         xl: '6rem',
         '2xl': '6rem',
       }
+    },
+    colors:{
+
     },
     extend: {},
   },

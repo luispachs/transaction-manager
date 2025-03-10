@@ -4,7 +4,7 @@ import {NextRequest,NextResponse} from "next/server";
 export  function middleware(request:NextRequest){
     const reqClone = request.clone()
     const path = request.nextUrl.pathname
-    if(path.startsWith("/es")||path.startsWith("/es")){
+    if(path.startsWith("/es")||path.startsWith("/en")){
         return NextResponse.next(reqClone);
     }
     return NextResponse.redirect(new URL("/es",process.env.BASE_URL),302);
@@ -13,5 +13,7 @@ export  function middleware(request:NextRequest){
 
 export const config = {
 
-    exclude: ['/api','/((?!_next).*)']
+    matcher:[
+        '/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)'
+    ]
 }

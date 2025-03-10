@@ -2,6 +2,8 @@
 // @ts-ignore
 import {Password} from "../Security/Password.ts";
 import {PrismaClient} from '@prisma/client';
+// @ts-ignore
+import {generateUUID} from "../utils.ts";
 
 const client =new PrismaClient();
 
@@ -51,9 +53,11 @@ async function  main():Promise<void>{
           ]
       })
 
+      let uuid = generateUUID();
 
       await client.users.create({
           data:{
+              id: uuid(),
               name:"luis",
               lastname:"pacheco",
               email:"laps1308@gmail.com",

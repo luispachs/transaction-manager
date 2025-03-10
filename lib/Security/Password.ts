@@ -1,9 +1,7 @@
 import {createHash} from "node:crypto";
 export class Password{
     static hash(password:string):string{
-        const hash = createHash(process.env.ALGT!,{
-
-        })
+        const hash = createHash(process.env.ALGT!,{})
         hash.update(password +":"+process.env.SALT!);
         return hash.digest('hex');
     }
