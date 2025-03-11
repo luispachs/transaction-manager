@@ -1,12 +1,22 @@
-import {signIn} from "@/auth";
+
 import {LoginForm} from "@/components/app-components/Forms/LoginForm";
-import {ThemeSwitch} from "@/components/app-components/ThemeSwitch";
+import {GeneralHeader} from "@/components/GeneralHeader";
+import {redirect} from "next/navigation";
+import {auth} from "@/lib/Security/auth";
 
 
-export default function Home() {
+export  default  async function Home({props}: {props: any}) {
+    const prop =await props;
+    const _auth =  await auth();
+    console.log(_auth);
+    if(_auth?.user!=null){
+        const url =new URL(`/${(prop?.lang??"es")}/dashboard`,process.env.BASE_URL);
+        redirect(url.toString());
+    }
+
   return (
       <>
-          <div className="w-full min-px-4 h-[10vh] flex items-center justify-end bg-[var(--background)]"><ThemeSwitch/></div>
+          <GeneralHeader/>
           <main className="w-full h-[90vh]  px-4 flex items-center justify-center bg-[var(--background)]">
               <section className="w-96 md:w-72 lg:w-64 xl:w-56 2xl:w-44">
                     <LoginForm />

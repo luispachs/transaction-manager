@@ -29,7 +29,7 @@ model roles {
   name         String       @db.VarChar(100)
   permmissions permissions?
   status       status       @default(ACTIVED)
-  user         users[]
+  user         User[]
 }
 
 model permissions {
@@ -40,15 +40,15 @@ model permissions {
   canModifyUsers   Boolean @default(false)
 }
 
-model users {
+model User {
   id              String         @id @default(cuid())
   name            String         @db.VarChar(100)
-  lastname        String         @db.VarChar(100)
+  lastname        String?        @db.VarChar(100)
   email           String         @unique @db.VarChar(100)
-  password        String         @db.VarChar(255)
-  phone           String         @db.VarChar(16)
+  password        String?        @db.VarChar(255)
+  phone           String?        @db.VarChar(16)
   role            roles          @relation(fields: [roleId], references: [id])
-  roleId          BigInt
+  roleId          BigInt         @default(2)
   transactionList transactions[]
 
   emailVerified DateTime?
@@ -78,7 +78,7 @@ model Account {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  user users @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([provider, providerAccountId])
 }
@@ -87,7 +87,7 @@ model Session {
   sessionToken String   @unique
   userId       String
   expires      DateTime
-  user         users    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -112,7 +112,7 @@ model Authenticator {
   credentialBackedUp   Boolean
   transports           String?
 
-  user users @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([userId, credentialID])
 }
@@ -124,5 +124,5 @@ model transactions {
   concept String          @db.VarChar(300)
   type    transactionType
   userId  String
-  user    users           @relation(fields: [userId], references: [id])
+  user    User            @relation(fields: [userId], references: [id])
 }

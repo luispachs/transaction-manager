@@ -7,13 +7,21 @@
   /* Your default theme */
   --background: white;
   --foreground: black;
+  --color-primary: #74a7ec;
+  --color-secondary: #eaeef8;
+  --color-tertiary: #c7ccd8;
+  --color-bPrimary: #f5f6fa;
+  --color-bSecondary: #c0d3f3;
+  --color-bTertiary: #93b7f1;
+  --color-accentPrimary: #398cf4;
+  --color-accentSecondary: #55aaf6;
+  --color-textPrimary: #000000;
+  --color-textSecondary: #0e0e17;
 }
 
 [data-theme='dark'] {
   --background: #0F1C2E;
   --foreground: #FFFFFF;
-}
-@theme {
   --color-primary:#1F3A5F;
   --color-secondary:#4d648d;
   --color-tertiary:#acc2ef;
@@ -24,6 +32,18 @@
   --color-accentSecondary:#cee8ff;
   --color-textPrimary:#FFFFFF;
   --color-textSecondary:#e0e0e0;
+}
+@theme {
+  --color-primary: #74a7ec;
+  --color-secondary: #eaeef8;
+  --color-tertiary: #c7ccd8;
+  --color-bPrimary: #f5f6fa;
+  --color-bSecondary: #c0d3f3;
+  --color-bTertiary: #93b7f1;
+  --color-accentPrimary: #398cf4;
+  --color-accentSecondary: #55aaf6;
+  --color-textPrimary: #000000;
+  --color-textSecondary: #0e0e17;
 }
 
 :root {

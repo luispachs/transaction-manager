@@ -1,3 +1,5 @@
-import {handlers} from "@/auth";
+import {get,post} from "@/lib/Security/auth";
 
-export const {GET,POST} = handlers;
+
+export const GET = get
+export const POST = post

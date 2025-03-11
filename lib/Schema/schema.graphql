@@ -1,0 +1,40 @@
+type user {
+    id:String
+    name: String
+    lastname:String
+    email:String
+    phone:String
+    role: role
+    transaction: [transactions!]!
+}
+
+type transactions {
+    id:Int
+    amount:Float
+    data:String
+    concept:String
+    type:String
+    user:user
+}
+
+type role {
+    id: Int
+    name: String
+    users: [user]
+}
+
+type Mutation {
+    createUser(name:String,lastname:String,email:String,phone:String,role: Int ):user
+    updateUser(name:String,id:String,lastname:String,email:String,phone:String,role: Int ):user
+    deleteUser(id:String!):user
+    createTransaction(id:Int,amount:Float,data:String,concept:String,type:String,user:Int):transactions
+    updateTransaction(id:Int,amount:Float,data:String,concept:String,type:String,user:Int):transactions
+    deleteTransaction(id:Int):transactions
+}
+type Query {
+    users:[user]
+    user(id:String):user
+    transactions:[transactions]
+    transaction(id:Int):transactions
+
+}

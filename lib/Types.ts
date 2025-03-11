@@ -38,6 +38,7 @@ export interface Transaction extends Model{
     amount:number;
     concept:string;
     type:"EGRESS"|"INCOMES"
+    userId:number;
 }
 
 export interface Role extends Model{
