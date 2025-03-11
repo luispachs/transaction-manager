@@ -5,8 +5,8 @@ import {redirect} from "next/navigation";
 import {auth} from "@/lib/Security/auth";
 
 
-export  default  async function Home({props}: {props: any}) {
-    const prop =await props;
+export  default  async function Home({PageProps}:{PageProps:Promise<{ lang: string }>;}) {
+    const prop =await PageProps;
     const _auth =  await auth();
     console.log(_auth);
     if(_auth?.user!=null){

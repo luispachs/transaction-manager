@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button"
 import {
     Dialog,
     DialogContent,
-
     DialogHeader,
     DialogTitle,
     DialogTrigger,
@@ -14,27 +13,47 @@ import {Select,SelectContent,SelectTrigger,SelectValue} from "@/components/ui/se
 import {
     SelectItem,
 } from "@/components/ui/select"
-import {useActionState, useEffect, useState} from "react";
-import {CreateTransactionAction} from "@/lib/Actions/TransactionAction";
+import {FormEvent,  useEffect, useRef, useState} from "react";
+
 export function CreateTransaction(){
-    const [users, setUsers] = useState([])
+    const [users, setUsers] = useState<React.ReactNode[]>([])
+    let [sta,setStatus] = useState(0);
+    let [amount,setAmount] = useState(0);
+    let [type,setType] = useState("");
+    let [concepts,setConcepts] = useState("");
+    let [user,setUser] = useState("");
+
 
     useEffect(()=>{
         fetch("/api/user", {
             method: "GET",
         }).then(async response =>await response.json())
             .then(data =>{
-
-               let userList = data.map((user:any,index:number)=>{
-                    return <SelectItem value={user.id}>{`${user.name} ${user.lastname}`}</SelectItem>
-                })
-                setUsers(userList)
+                console.log(data)
+                let arr =data as Array<object>
+                // @ts-ignore
+                setUsers(arr)
             })
-    })
+    },[sta])
+
+    function create(ev:FormEvent<HTMLFormElement>){
+        ev.preventDefault();
+
+        fetch("/api/transaction/create", {
+            method: "POST",
+            body: JSON.stringify({amount:amount,type:type,userId:user,concept:concepts,})
+        }).then(async response =>await response.json()).then((data:any[]) =>{
 
 
-    const initialState = {status:0,message:"",entities:{}};
-    const [state, formAction, pending] = useActionState<any,any>(CreateTransactionAction, initialState)
+            let usersList = data.transactions.map((user:any,index:number)=>{
+                return (<SelectItem value={user.id} key={index}>{`${user.name} ${user.lastname}`}</SelectItem>)
+            })
+            setUsers(usersList)
+
+        }).catch(error=>{
+            console.log(error)
+        })
+    }
 
     return (
         <Dialog>
@@ -43,20 +62,20 @@ export function CreateTransaction(){
                 <DialogHeader>
                     <DialogTitle className="w-full text-center">Nueva Transaction</DialogTitle>
                 </DialogHeader>
-                <form className="w-full flex flex-col items-center justify-center">
+                <form className="w-full flex flex-col items-center justify-center gap-8"  onSubmit={create}>
                 <article className="w-full flex flex-col items-center justify-center">
                     <Label className="w-full text-center">Cantidad</Label>
-                    <Input variant={"default"} btnSize={"default"} name={"number"} id={"amount"}/>
+                    <Input variant={"default"} btnSize={"default"} name={"number"} id={"amount"}  onChangeCapture={(e:FormEvent<HTMLInputElement>)=>{setAmount(parseInt(e.currentTarget.value))}}/>
                 </article>
                 <article className="w-full flex flex-col items-center justify-center">
                     <Label className="w-full text-center">Concepto</Label>
-                    <Input variant={"default"} btnSize={"default"} name={"text"} id={"concept"}/>
+                    <Input variant={"default"} btnSize={"default"} name={"text"} id={"concept"} onChangeCapture={(e:FormEvent<HTMLInputElement>)=>{setConcepts(e.currentTarget.value)}}/>
                 </article>
                 <article className="w-full flex flex-col items-center justify-center">
                     <Label className="w-full text-center">Tipo</Label>
-                    <Select name="type">
+                    <Select name="type" onValueChange={(e)=>{setType(e)}} >
                         <SelectTrigger className="w-[180px]">
-                            <SelectValue placeholder="Seleccione tipo de transacción" />
+                            <SelectValue placeholder="Seleccione tipo de transacción"  />
                         </SelectTrigger>
                         <SelectContent >
                             <SelectItem value="EGRESS">Egreso</SelectItem>
@@ -66,9 +85,9 @@ export function CreateTransaction(){
                 </article>
                 <article className="w-full flex flex-col items-center justify-center">
                     <Label className="w-full text-center">Tipo</Label>
-                    <Select name="user">
+                    <Select name="user" onValueChange={(e)=>{setUser(e)}}>
                         <SelectTrigger className="w-[180px]">
-                            <SelectValue placeholder="Seleccione tipo de transacción" />
+                            <SelectValue placeholder="Seleccione un usuario"    />
                         </SelectTrigger>
                         <SelectContent>
                             {users}

@@ -7,7 +7,7 @@ export class TransactionRepository implements Repository<Transaction>{
     constructor(){
         this.#client = new PrismaClient();
     }
-    async create(transaction: Transaction): Promise<any> {
+    async create( transaction: Transaction): Promise<any> {
         return (await this.#client.transactions.create({data:transaction as any}));
     }
 

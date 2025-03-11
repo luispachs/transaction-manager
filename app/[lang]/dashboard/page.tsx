@@ -3,8 +3,8 @@ import {auth} from "@/lib/Security/auth";
 import {redirect} from "next/navigation";
 import {UserRepository} from "@/lib/Repository/UserRepository";
 
-export default async function home({params}: {params: {lang: string}}) {
-    const param  =await params;
+export default async function home({PageProps}:{PageProps:Promise<{ lang: string }>;}) {
+    const param  =await PageProps;
     const lang = param.lang ?? "es";
     const _auth = await auth();
     const user = _auth?.user;

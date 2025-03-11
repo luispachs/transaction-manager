@@ -13,12 +13,12 @@ export function TransactionTable(){
             .then(data =>{
                     let transactionList =  data.map((transaction:any,index:number)=>{
                         return <TableRow className="w-full bg-bPrimary min-h-min" key={index}>
-                            <TableCell className="bg-accentSecondary  h-[2.5rem] rounded-lg size-5" >{transaction.date}</TableCell>
-                            <TableCell  className="bg-accentSecondary h-[2.5rem] rounded-lg size-5" >{transaction.amount}</TableCell>
-                            <TableCell  className="bg-accentSecondary h-[2.5rem] rounded-lg size-5" >{transaction.concept}</TableCell>
-                            <TableCell  className="bg-accentSecondary h-[2.5rem] rounded-lg size-5" >{transaction.type}</TableCell>
-                            <TableCell  className="bg-accentSecondary h-[2.5rem] rounded-lg size-5" >{transaction.user.name +" "+ transaction.user.lastname}</TableCell>
-                            <TableCell  className="bg-accentSecondary h-[2.5rem] rounded-lg size-5" ><EditTransaction/></TableCell>
+                            <TableCell className="bg-accentPrimary  h-[2.5rem] rounded-lg size-5 text-foregraund" >{transaction.date}</TableCell>
+                            <TableCell  className="bg-accentPrimary h-[2.5rem] rounded-lg size-5 text-foregraund" >{transaction.amount}</TableCell>
+                            <TableCell  className="bg-accentPrimary h-[2.5rem] rounded-lg size-5 text-foregraund" >{transaction.concept}</TableCell>
+                            <TableCell  className="bg-accentPrimary h-[2.5rem] rounded-lg size-5 text-foregraund" >{transaction.type}</TableCell>
+                            <TableCell  className="bg-accentPrimary h-[2.5rem] rounded-lg size-5 text-foregraund" >{transaction.user.name +" "+ transaction.user.lastname}</TableCell>
+                            <TableCell  className="bg-accentPrimary h-[2.5rem] rounded-lg size-5 text-foregraund" ><EditTransaction/></TableCell>
                         </TableRow>
                     });
 
@@ -26,6 +26,7 @@ export function TransactionTable(){
                 }
             )
     }, []);
+
 
 
     return (

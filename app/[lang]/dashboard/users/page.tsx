@@ -12,7 +12,7 @@ import {TableFallback} from "@/components/fallback/TableFallback"
 import {Suspense, useState,useEffect} from "react";
 import {EditUser} from "@/components/app-components/EditUser";
 
-export default function page({params}:{params:{lang:string}}){
+export default function page({PageProps}:{PageProps:Promise<{ lang: string }>;}){
     const [users,setUsers] = useState([])
     useEffect(() => {
         fetch("/api/user").then(
